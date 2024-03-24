@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrolling Images</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth; /* 부드러운 스크롤을 위한 속성 */
+            overflow-x: scroll; /* 가로 스크롤이 필요한 경우에만 스크롤 표시 */
+            overflow-y: scroll; /* 세로 스크롤이 필요한 경우에만 스크롤 표시 */
+        }
+
+        .image-container {
+            display: flex;
+            flex-wrap: nowrap; /* 이미지들이 가로로 이어지도록 설정 */
+            position: relative; /* 상대 위치 설정 */
+        }
+
+        .image-container img {
+            width: auto; /* 이미지의 너비를 자동으로 설정하여 비율 유지 */
+            height: 100vh; /* 이미지의 높이를 화면 높이와 동일하게 설정하여 세로 스크롤을 생성 */
+            object-fit: contain; /* 이미지가 요소 내에 적합하게 맞추어지도록 함 */
+            cursor: pointer; /* 포인터 모양으로 커서 설정 */
+        }
+
+        .text-container {
+            position: fixed; /* 페이지 스크롤과 관계없이 고정된 위치에 표시 */
+            z-index: 9999; /* 다른 요소들보다 위에 표시되도록 설정 */
+            color: black; /* 글자 색상 설정 */
+            font-family: Arial, sans-serif; /* Arial 폰트 적용 */
+        }
+
+        /* 이미지 컨테이너의 마우스 이벤트를 비활성화 */
+        .image-container {
+            pointer-events: none;
+        }
+
+        /* 이미지에 대한 클릭 이벤트를 처리 */
+        .image-container img {
+            pointer-events: auto;
+        }
+
+        /* 마우스 이펙트 스타일 */
+        .mouse-effect {
+            position: fixed;
+            z-index: 999; /* 이미지 위에 표시되도록 설정 */
+            pointer-events: none; /* 이펙트는 클릭이벤트를 가로채지 않도록 함 */
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <img src="11.png" alt="Image 1">
+    </div>
+    <div class="image-container">
+        <img src="22.png" alt="Image 2">
+    </div>
+    <div class="image-container">
+        <img src="33.png" alt="Image 3">
+    </div>
+    <div class="image-container">
+        <img src="44.png" alt="Image 4">
+    </div>
+    <div class="image-container" id="last-image-container">
+       
+        <a href="3.html">
+            <img src="55.png" alt="Image 5">
+        </a>
+        
+    </div>
+    <div class="text-container" id="text"></div>
+    <div class="mouse-effect" id="mouse-effect"></div>
+    <script>
+        const text = "1001001 100000 1101000 1101111 1110000 1100101 100000 1110100 1101000 1101001 1110011 100000 1100011 1101111 1100001 1110100 100000 1110011 111010";
+
+        document.addEventListener('mousemove', (event) => {
+            const x = event.clientX;
+            const y = event.clientY;
+            const charIndex = Math.floor((x + y) % text.length);
+            const char = text.charAt(charIndex);
+
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.style.position = 'fixed';
+            span.style.top = `${y}px`;
+            span.style.left = `${x}px`;
+            span.style.color = 'black'; // 숫자의 색상 지정
+            span.style.opacity = '0.5'; // 투명도 설정
+
+            document.getElementById('text').appendChild(span);
+        });
+
+    
+    </script>
+</body>
+</html>

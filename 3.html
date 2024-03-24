@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome</title>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif; /* 항상 Arial 폰트 사용 */
+    }
+
+    .welcome-text {
+        position: absolute;
+        left: 70px; /* 왼쪽에서 70px 떨어진 위치 */
+        top: 70px; /* 상단에서 70px 떨어진 위치 */
+        font-size: 70px; /* 폰트 크기 24px */
+        color: black; /* 기본 색상은 검정색 */
+    }
+
+    .welcome-subtext {
+        position: absolute;
+        left: 70px;
+        top: 300px;
+        font-size: 24px;
+        color: black;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+    .container {
+        display: flex;
+        flex-direction: row; /* 가로 방향으로 정렬 */
+        justify-content: space-around; /* 가운데 정렬 */
+        align-items: center;
+        flex-wrap: wrap; /* 넘치는 경우 줄바꿈 */
+        margin-top: 200px;
+    }
+    .id-card, .user-information {
+        width: 400px; /* 너비 조정 */
+        padding: 30px; /* 패딩 조정 */
+        margin-top: 100px;
+        text-align: left;
+    }
+    .id-card p, .user-information p {
+        margin: 5px 0;
+    }
+    .id-card label, .user-information label {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    /* 입력란의 박스 테두리를 없애기 */
+    .user-information input,
+    .user-information select {
+        border: none;
+        border-bottom: 1px solid #333;
+        padding: 5px;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    /* ID Card의 테두리 설정 */
+    .id-card {
+        border: 2px solid #333;
+    }
+    .footprint {
+        position: absolute;
+        color: black;
+        font-size: 20px;
+    }
+    
+</style>
+<script>
+    document.onmousemove = function(e) {
+        var x = e.clientX;
+        var y = e.clientY;
+        var footprint = document.createElement("div");
+        footprint.className = "footprint";
+        footprint.textContent = "1";
+        footprint.style.position = "absolute";
+        footprint.style.left = x + "px";
+        footprint.style.top = y + "px";
+        document.documentElement.appendChild(footprint); // 변경된 부분
+        setTimeout(function() {
+            footprint.style.opacity = "0";
+            footprint.style.transition = "opacity 0.3s ease-out";
+        }, 100);
+        setTimeout(function() {
+            footprint.remove();
+        }, 4000);
+    };
+</script>
+</head>
+<body>
+<div class="welcome-text">
+    Welcome<br>
+    Next owner
+</div>
+
+<div class="welcome-subtext">
+    Plz update your information.
+</div>
+
+<div class="container">
+    <div class="user-information">
+        <h2>User Information</h2>
+        <form id="userInfoForm">
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name" placeholder="Name" oninput="updateIDCard()"><br>
+
+            <label for="age">Age:</label><br>
+            <input type="number" id="age" name="age" placeholder="Age" oninput="updateIDCard()"><br>
+
+            <label for="year">Year of purchase:</label><br>
+            <select id="year" name="year" onchange="updateIDCard()">
+                <script>
+                    for (var year = 2020; year <= 2060; year++) {
+                        document.write("<option value='" + year + "'>" + year + "</option>");
+                    }
+                </script>
+            </select><br>
+
+            <label for="country">Country of purchase:</label><br>
+            <select id="country" name="country" onchange="updateIDCard()">
+                <option value="USA">United States</option>
+                <option value="Canada">Canada</option>
+                <option value="UK">United Kingdom</option>
+                <option value="Germany">Germany</option>
+                <option value="Italy">Italy</option>
+                <option value="Spain">Spain</option>
+                <option value="Australia">Australia</option>
+                <option value="Japan">Japan</option>
+                <option value="South Korea">South Korea</option>
+                <option value="China">China</option>
+                <option value="Brazil">Brazil</option>
+                <option value="India">India</option>
+                <option value="Russia">Russia</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Argentina">Argentina</option>
+                <option value="South Africa">South Africa</option>
+                <option value="Egypt">Egypt</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Saudi Arabia">Saudi Arabia</option>
+                <option value="United Arab Emirates">United Arab Emirates</option>
+                <option value="Netherlands">Netherlands</option>
+                <option value="Switzerland">Switzerland</option>
+                <option value="Sweden">Sweden</option>
+                <option value="Norway">Norway</option>
+                <option value="Denmark">Denmark</option>
+                <option value="Finland">Finland</option>
+                <option value="Portugal">Portugal</option>
+                <option value="Greece">Greece</option>
+                <option value="Ireland">Ireland</option>
+                <!-- 다른 나라들을 추가할 수 있습니다 -->
+            </select><br>
+
+            <!-- 저장 버튼 -->
+            <button type="button" onclick="saveUserInfo()">Save</button>
+        </form>
+    </div>
+
+    <div class="id-card" id="idCard">
+        <h2>ID Card</h2>
+        <p><label for="idName">Name:</label> <span id="idName">[Name]</span></p>
+        <p><label for="idAge">Age:</label> <spanid="idAge">[Age]</span></p>
+        <p><label for="idYear">Year of purchase:</label> <span id="idYear">[Year]</span></p>
+        <p><label for="idCountry">Country of purchase:</label> <span id="idCountry">[Country]</span></p>
+    </div>
+
+    <div class="stored-information" style="font-size: 25px; position: absolute; left: 70px; top: 1100px;">
+        <p>This is stored information.</p>
+    </div>
+    
+
+    <!-- 고정된 ID Card 1 -->
+    <div class="id-card" style="position: absolute; left: 120px; top: 1090px; text-align: left; align-items: center;" id="fixedIdCard1">
+        <h2>ID Card</h2>
+        <p><label>Name:</label> <span>?</span></p>
+        <p><label>Age:</label> <span>?</span></p>
+        <p><label>Year of purchase:</label> <span>2015</span></p>
+        <p><label>Country
+            of purchase:</label> <span>Japan</span></p>
+        </div>
+    
+        <!-- 고정된 ID Card 2 -->
+        <div class="id-card" style="position: absolute; left: 120px; top: 1400px; text-align: left; align-items: center;" id="fixedIdCard2">
+            <h2>ID Card</h2>
+            <p><label>Name:</label> <span>Jaeyeon Hong</span></p>
+            <p><label>Age:</label> <span>22</span></p>
+            <p><label>Year of purchase:</label> <span>2021</span></p>
+            <p><label>Country of purchase:</label> <span>South Korea</span></p>
+        </div>
+
+        <div id="additional-text" style="font-size: 70px; margin-top: 1050px; text-align: center;">
+            I hope this coat stays as a dress forever.
+        </div>
+    </div>
+    
+    <div class="footprint" id="footprint" style="display: none;"></div>
+    
+    <script>
+        // 사용자가 입력한 값을 기반으로 ID Card를 업데이트하는 함수
+        function updateIDCard() {
+            var name = document.getElementById("name").value || "[Name]";
+            var age = document.getElementById("age").value || "[Age]";
+            var year = document.getElementById("year").value || "[Year]";
+            var country = document.getElementById("country").value || "[Country]";
+    
+            // ID Card 업데이트
+            document.getElementById("idName").textContent = name;
+            document.getElementById("idAge").textContent = age;
+            document.getElementById("idYear").textContent = year;
+            document.getElementById("idCountry").textContent = country;
+        }
+    
+        // 저장 버튼을 눌렀을 때 사용자 정보를 로컬 스토리지에 저장하는 함수
+        function saveUserInfo() {
+            var name = document.getElementById("name").value || "[Name]";
+            var age = document.getElementById("age").value || "[Age]";
+            var year = document.getElementById("year").value || "[Year]";
+            var country = document.getElementById("country").value || "[Country]";
+    
+            // 사용자 정보를 객체로 저장
+            var userInfo = {
+                name: name,
+                age: age,
+                year: year,
+                country: country
+            };
+    
+            // 로컬 스토리지에 저장
+            localStorage.setItem("userInfo", JSON.stringify(userInfo));
+    
+            // ID Card 업데이트
+            updateIDCard();
+        }
+    
+        // 페이지 로드 시 로컬 스토리지에서 저장된 값을 불러와서 ID Card를 업데이트
+        window.onload = function() {
+            var userInfo = JSON.parse(localStorage.getItem("userInfo"));
+            if (userInfo) {
+                document.getElementById("name").value = userInfo.name;
+                document.getElementById("age").value = userInfo.age;
+                document.getElementById("year").value = userInfo.year;
+                document.getElementById("country").value = userInfo.country;
+                updateIDCard(); // ID Card 업데이트
+            }
+        }
+    
+        document.onmousemove = function(e) {
+            var x = e.clientX;
+            var y = e.clientY;
+            var footprint = document.createElement("div");
+            footprint.className = "footprint";
+            footprint.textContent = "1";
+            footprint.style.position = "absolute";
+            footprint.style.left = x + "px";
+            footprint.style.top = y + "px";
+            document.documentElement.appendChild(footprint);
+            setTimeout(function() {
+                footprint.style.opacity = "0";
+                footprint.style.transition = "opacity 0.3s ease-out";
+            }, 100);
+            setTimeout(function() {
+                footprint.remove();
+            }, 4000);
+        };
+    </script>
+</body>
+</html>
+
